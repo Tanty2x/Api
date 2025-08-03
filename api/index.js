@@ -2,6 +2,7 @@ import express from "express";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../lib/firestore.js";
 import cors from "cors";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const app = express();
 

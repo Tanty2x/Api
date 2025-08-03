@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // const port = 3000;
 
-app.post('/api/check-status', async (req, res) => {
+app.post('/check-status', async (req, res) => {
     const { name, nameapp } = req.body;
 
     if (!name || !nameapp) {

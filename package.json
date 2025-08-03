@@ -1,5 +1,5 @@
 {
-  "name": "your-api",
+  "name": "api",
   "version": "1.0.0",
   "main": "api/index.js",
   "scripts": {

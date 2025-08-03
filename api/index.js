@@ -47,3 +47,6 @@ app.post('/check-status', async (req, res) => {
 app.use((req, res) => {
     res.status(404).send("Not Found");
 });
+
+// Export the Express app for Vercel
+export default app;

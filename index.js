@@ -9,8 +9,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 
-app.use(express.static(path.join(__dirname, "public")));
-
 app.use("/api", statusRouter);
 app.use("/api", stt);
 
@@ -18,6 +16,6 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-// app.listen(8000, () => {
-//   console.log("Server running on http://localhost:8000");
-// });
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+});

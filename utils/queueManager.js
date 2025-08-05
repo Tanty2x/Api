@@ -13,12 +13,10 @@ export function enqueue(key, task) {
 
     const currentQueue = queues.get(key);
 
-    const nextTask = currentQueue
-        .then(() => task())
-        .catch((err) => {
-            console.error("Queue task error:", err);
-        });
+    // ✅ KHÔNG catch lỗi ở đây nữa
+    const nextTask = currentQueue.then(() => task());
 
     queues.set(key, nextTask);
     return nextTask;
 }
+

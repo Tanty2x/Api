@@ -16,9 +16,7 @@ status.post("/check", async (req, res) => {
     if (!name || !nameapp) {
         return res.status(400).send("ERROR: Missing required fields");
     }
-
     const docRef = doc(db, "user_app", name);
-
     try {
         const docSnap = await getDoc(docRef);
 

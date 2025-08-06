@@ -24,10 +24,8 @@ stt.post("/stt", async (req, res) => {
             if (!docSnap.exists()) {
                 throw new Error("Document không tồn tại");
             }
-
             const data = docSnap.data();
             let current = data[getstt];
-
             if (current === undefined) {
                 throw new Error("Không có xưởng cần lấy số");
             }

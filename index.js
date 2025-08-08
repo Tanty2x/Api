@@ -7,8 +7,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 
-import axios from 'axios';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -24,15 +22,3 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-setInterval(async () => {
-  try {
-    await axios.get('https://api-azjz.onrender.com/');
-    console.log("Keep-alive ping sent");
-  } catch (err) {
-    console.error("Keep-alive ping failed:", err.message);
-  }
-}, 1000 * 60 * 10); // Ping mỗi 10 phút
-
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
-});

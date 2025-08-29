@@ -1,4 +1,3 @@
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firestore.js";
 import express from "express";
 import { Router } from "express";
@@ -19,19 +18,20 @@ status.post("/check", async (req, res) => {
 
     try {
         const result = await enqueue(name, async () => {
-            const docRef = doc(db, "user_app", name);
-            const docSnap = await getDoc(docRef);
+            // Sử dụng Admin SDK syntax
+            const docRef = db.collection("user_app").doc(name);
+            const docSnap = await docRef.get();
 
-            if (docSnap.exists()) {
+            if (docSnap.exists) { // ✅ Sửa thành .exists (không có dấu ngoặc)
                 const data = docSnap.data();
                 if (data.hasOwnProperty(nameapp)) {
                     return data[nameapp];
                 } else {
-                    await updateDoc(docRef, { [nameapp]: "ON" });
+                    await docRef.update({ [nameapp]: "ON" }); // ✅ Sửa thành .update()
                     return "ON";
                 }
             } else {
-                await setDoc(docRef, { [nameapp]: "ON" });
+                await docRef.set({ [nameapp]: "ON" }); // ✅ Sửa thành .set()
                 return "ON";
             }
         });
@@ -42,6 +42,5 @@ status.post("/check", async (req, res) => {
         res.status(500).send("ERROR: Server error");
     }
 });
-
 
 export default status;

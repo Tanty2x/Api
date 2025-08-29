@@ -1,8 +1,7 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../firestore.js";
+import { db } from "../firestore.js"; // 👈 Giữ nguyên
 import express from "express";
 import { Router } from "express";
-import { enqueue } from "../utils/queueManager.js"; // 👈 Thêm dòng này
+import { enqueue } from "../utils/queueManager.js";
 
 const stt = Router();
 
@@ -18,21 +17,23 @@ stt.post("/stt", async (req, res) => {
 
     try {
         const result = await enqueue(getstt, async () => {
-            const docRef = doc(db, "so_thu_tu", "STT");
-            const docSnap = await getDoc(docRef);
+            const docRef = db.collection("so_thu_tu").doc("STT"); // 👈 Thay đổi cách truy cập
+            const docSnap = await docRef.get();
 
-            if (!docSnap.exists()) {
+            if (!docSnap.exists) {
                 throw new Error("Document không tồn tại");
             }
+            
             const data = docSnap.data();
             let current = data[getstt];
+            
             if (current === undefined) {
                 throw new Error("Không có xưởng cần lấy số");
             }
 
             current = current < 999 ? current + 1 : 1;
 
-            await updateDoc(docRef, { [getstt]: current });
+            await docRef.update({ [getstt]: current }); // 👈 Thay đổi cách update
 
             return current;
         });
